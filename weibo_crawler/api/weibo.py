@@ -13,11 +13,20 @@ def _get_token_from_config():
     return token
 
 
-@bp.route('/public-timeline', methods=['GET'])
-def get_public_timeline():
+@bp.route('/user-info', methods=['GET'])
+def get_user_info():
     token = _get_token_from_config()
-    base_url = 'https://api.weibo.com/2/statuses/public_timeline.json'
-    req_url = '{}?access_token={}'.format(base_url, token)
+    base_url = 'https://api.weibo.com/2/users/show.json'
+    req_url = '{}?access_token={}&uid={}&feature=1'.format(base_url, token, 1057259102)
+    response = requests.get(req_url)
+    return response.text
+
+
+@bp.route('/user-follows', methods=['GET'])
+def get_user_follows():
+    token = _get_token_from_config()
+    base_url = 'https://api.weibo.com/2/friendships/followers.json'
+    req_url = '{}?access_token={}&uid={}&feature=1'.format(base_url, token, 1057259102)
     response = requests.get(req_url)
     return response.text
 
@@ -25,8 +34,17 @@ def get_public_timeline():
 @bp.route('/user-timeline', methods=['GET'])
 def get_user_timeline():
     token = _get_token_from_config()
-    base_url = 'https://api.weibo.com/2/statuses/user_timeline/ids.json'
+    base_url = 'https://api.weibo.com/2/statuses/user_timeline'
     req_url = '{}?access_token={}&uid={}&feature=1'.format(base_url, token, 1057259102)
+    response = requests.get(req_url)
+    return response.text
+
+
+@bp.route('/bilateral-timeline', methods=['GET'])
+def get_bilateral_timeline():
+    token = _get_token_from_config()
+    base_url = 'https://api.weibo.com/2/statuses/bilateral_timeline.json'
+    req_url = '{}?access_token={}&feature=1'.format(base_url, token)
     response = requests.get(req_url)
     return response.text
 
@@ -36,6 +54,15 @@ def get_home_timeline():
     token = _get_token_from_config()
     base_url = 'https://api.weibo.com/2/statuses/home_timeline.json'
     req_url = '{}?access_token={}&feature=1'.format(base_url, token)
+    response = requests.get(req_url)
+    return response.text
+
+
+@bp.route('/public-timeline', methods=['GET'])
+def get_public_timeline():
+    token = _get_token_from_config()
+    base_url = 'https://api.weibo.com/2/statuses/public_timeline.json'
+    req_url = '{}?access_token={}'.format(base_url, token)
     response = requests.get(req_url)
     return response.text
 
