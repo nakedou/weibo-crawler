@@ -1,6 +1,6 @@
 import os
 
-from invoke import ctask
+from invoke.tasks import task
 
 from weibo_crawler import create_app
 
@@ -18,7 +18,7 @@ def get_project_root(path=__file__):
     return None
 
 
-@ctask
+@task
 def server(ctx):
     app = create_app(ctx['conf_file'])
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug=True)
