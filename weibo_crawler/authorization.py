@@ -25,3 +25,13 @@ def get_access_token(code):
             return None
 
         return response.json().get('access_token')
+
+
+def get_access_uid(token):
+    req_url = 'https://api.weibo.com/2/account/get_uid.json?access_token={}'.format(token)
+    response = requests.get(req_url)
+
+    if response.status_code != 200:
+        return None
+
+    return response.json().get('uid')

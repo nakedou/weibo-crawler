@@ -7,15 +7,17 @@ from werkzeug.utils import redirect
 
 # from scripts import wechat_server
 from scripts import wechat
-from weibo_crawler.authorization import get_authorize_url, get_access_token
+from weibo_crawler.api.weibo import get_uid_from_config
+from weibo_crawler.authorization import get_authorize_url, get_access_token, get_access_uid
 
 bp = Blueprint('root', __name__)
 
 
 @bp.route('/')
 def index():
+    uid = get_uid_from_config()
     wechat.send('Sina Weibo Crawler', datetime.now())
-    return render_template('index.html', message='Welcome to Sina Weibo Crawler!')
+    return render_template('index.html', uid=uid, message='Welcome to Sina Weibo Crawler!')
 
 
 @bp.route('/auth', methods=['GET'])
@@ -28,9 +30,11 @@ def login():
     auth_code = request.args.get('code')
     access_token = get_access_token(auth_code)
     if access_token is None:
-        return 'sorry, the server is gone'
+        return 'oh my god, the server is going to die...'
     # wechat_server.run_server()
+    uid = get_access_uid(access_token)
     current_app.config['token'] = access_token
+    current_app.config['uid'] = uid
     return redirect('/')
 
 
