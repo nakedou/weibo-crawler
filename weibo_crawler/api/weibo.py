@@ -1,6 +1,5 @@
 import requests
 from flask.globals import current_app
-from werkzeug.utils import redirect
 
 from weibo_crawler.api import bp
 
@@ -9,7 +8,7 @@ def get_token_from_config():
     try:
         token = current_app.config['token']
     except KeyError:
-        return redirect('/auth')
+        return None
     return token
 
 
@@ -17,7 +16,7 @@ def get_uid_from_config():
     try:
         uid = current_app.config['uid']
     except KeyError:
-        return redirect('/auth')
+        return None
     return uid
 
 
