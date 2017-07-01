@@ -17,7 +17,7 @@ def _get_token_from_config():
 def get_user_info():
     token = _get_token_from_config()
     base_url = 'https://api.weibo.com/2/users/show.json'
-    req_url = '{}?access_token={}&uid={}'.format(base_url, token, 1057259102)
+    req_url = '{}?access_token={}'.format(base_url, token)
     response = requests.get(req_url)
     return response.text
 
@@ -26,7 +26,7 @@ def get_user_info():
 def get_user_follows():
     token = _get_token_from_config()
     base_url = 'https://api.weibo.com/2/friendships/followers.json'
-    req_url = '{}?access_token={}&uid={}&feature=1'.format(base_url, token, 1057259102)
+    req_url = '{}?access_token={}&feature=1'.format(base_url, token)
     response = requests.get(req_url)
     return response.text
 
@@ -35,7 +35,7 @@ def get_user_follows():
 def get_user_timeline():
     token = _get_token_from_config()
     base_url = 'https://api.weibo.com/2/statuses/user_timeline.json'
-    req_url = '{}?access_token={}&uid={}&feature=1'.format(base_url, token, 1057259102)
+    req_url = '{}?access_token={}&feature=1'.format(base_url, token)
     response = requests.get(req_url)
     return response.text
 
