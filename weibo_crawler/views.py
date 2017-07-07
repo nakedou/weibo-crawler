@@ -16,7 +16,11 @@ bp = Blueprint('root', __name__)
 @bp.route('/')
 def index():
     uid = get_uid_from_config()
-    wechat.send('Sina Weibo Crawler', datetime.now())
+    if uid is None:
+        msg = datetime.now()
+    else:
+        msg = '{} --- visit at --- {}'.format(uid, datetime.now())
+    wechat.send('Weibo Crawler', msg)
     return render_template('index.html', uid=uid, message='Welcome to Sina Weibo Crawler!')
 
 
