@@ -1,5 +1,5 @@
 import requests
-from flask.globals import current_app
+from flask.globals import current_app, session
 
 from weibo_crawler.api import bp
 
@@ -12,9 +12,9 @@ def get_token_from_config():
     return token
 
 
-def get_uid_from_config():
+def get_uid_from_session():
     try:
-        uid = current_app.config['uid']
+        uid = session['uid']
     except KeyError:
         return None
     return uid
@@ -23,7 +23,7 @@ def get_uid_from_config():
 @bp.route('/user-info', methods=['GET'])
 def get_user_info():
     token = get_token_from_config()
-    uid = get_uid_from_config()
+    uid = get_uid_from_session()
     base_url = 'https://api.weibo.com/2/users/show.json'
     req_url = '{}?access_token={}&uid={}'.format(base_url, token, uid)
     response = requests.get(req_url)
@@ -33,7 +33,7 @@ def get_user_info():
 @bp.route('/user-follows', methods=['GET'])
 def get_user_follows():
     token = get_token_from_config()
-    uid = get_uid_from_config()
+    uid = get_uid_from_session()
     base_url = 'https://api.weibo.com/2/friendships/followers.json'
     req_url = '{}?access_token={}&uid={}&feature=1'.format(base_url, token, uid)
     response = requests.get(req_url)
