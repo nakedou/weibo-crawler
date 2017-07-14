@@ -13,6 +13,7 @@ def _register_blueprints(app):
 
 def create_app(conf_file=None):
     app = Flask(__name__)
+    app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
     if conf_file:
         app.config.from_pyfile(conf_file)
     elif os.environ.get('CONF') is not None:
