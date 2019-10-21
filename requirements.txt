@@ -19,5 +19,5 @@ six==1.10.0
 tornado==4.5.1
 urllib3==1.21.1
 wechat-sender==0.1.4
-Werkzeug==0.12.2
+Werkzeug==0.15.3
 wxpy==0.3.9.8
